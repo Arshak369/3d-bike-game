@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Bike Racing Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script>
+        // Initialize Three.js Scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add Road (Plane)
+        const roadGeometry = new THREE.PlaneGeometry(10, 100);
+        const roadMaterial = new THREE.MeshBasicMaterial({ color: 0x444444, side: THREE.DoubleSide });
+        const road = new THREE.Mesh(roadGeometry, roadMaterial);
+        road.rotation.x = -Math.PI / 2;
+        scene.add(road);
+
+        // Add Bike (Simple Cube as Placeholder)
+        const bikeGeometry = new THREE.BoxGeometry(1, 1, 2);
+        const bikeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const bike = new THREE.Mesh(bikeGeometry, bikeMaterial);
+        bike.position.y = 0.5;
+        scene.add(bike);
+
+        camera.position.z = 5;
+        camera.position.y = 2;
+        camera.lookAt(bike.position);
+
+        // Animate the Bike Moving Forward
+        function animate() {
+            requestAnimationFrame(animate);
+            bike.position.z -= 0.05; // Move forward
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
